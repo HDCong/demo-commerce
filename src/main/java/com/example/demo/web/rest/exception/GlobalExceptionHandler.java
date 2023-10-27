@@ -1,0 +1,26 @@
+package com.example.demo.web.rest.exception;
+
+import com.example.demo.domain.dto.ErrorDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@Slf4j
+@RestControllerAdvice
+@Transactional(rollbackFor = Throwable.class)
+@RequiredArgsConstructor
+public class GlobalExceptionHandler {
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<ErrorDto> handleException(final Exception exception) {
+    log.error(exception.getMessage(), exception);
+
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(ErrorDto.builder()
+            .message(exception.getMessage())
+            .build());
+  }
+}
