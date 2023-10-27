@@ -29,8 +29,8 @@ public class Customer extends BaseAuditableEntity {
   @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
   private String id;
 
-  @Column
-  private String fullName;
+  @Column(name = "full_name")
+  private String name;
 
   @Column
   private Date dob;

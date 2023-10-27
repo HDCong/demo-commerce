@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,14 @@ public class ExcelReader implements IFileReader {
 
               switch (cellIndex) {
                 case 0 -> data.setName(cell.getStringCellValue());
-                case 1 -> data.setDob(cell.getDateCellValue());
+                case 1 -> {
+                  try {
+                    Date cellValue = cell.getDateCellValue();
+                    data.setDob(cellValue.getTime());
+                  } catch (Exception e) {
+                    log.error("Error when read row {}, index {}", rowIndex, cellIndex);
+                  }
+                }
                 case 2 -> data.setEmail(cell.getStringCellValue());
                 default -> {}
               }

@@ -1,5 +1,6 @@
 package com.example.demo.domain.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,8 @@ import lombok.Setter;
 @Setter
 @Builder
 public class GetAllDto<T> {
-  private Long total;
-  private List<T> content;
+  @Builder.Default
+  private Long total = 0L;
+  @Builder.Default
+  private List<T> content = new ArrayList<>();
 }
